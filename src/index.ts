@@ -1,12 +1,11 @@
-import express, { Request, Response } from 'express'
+import { APIs_V1 } from '@/routes'
+import express from 'express'
 
 const HOST_NAME = 'localhost'
 const HOST_PORT = 5000
 const app = express()
 
-app.get('', (req: Request, res: Response) => {
-  res.send('<h1>Hello World</h1>')
-})
+app.use('/api/v1', APIs_V1)
 
 app.listen(HOST_PORT, HOST_NAME, () => {
   console.log(`Server is running on http://${HOST_NAME}:${HOST_PORT}`)
