@@ -11,6 +11,7 @@ import {
 import ApiError from '@/utils/ApiError'
 import { hashPassword } from '@/utils/hashPassword'
 import { StatusCodes } from 'http-status-codes'
+import { env } from '@/config/environment'
 
 const register = async (
   payload: RegisterPayload
@@ -97,7 +98,7 @@ const login = async (
         uid: existingUser.id,
         email: existingUser.email
       },
-      'accessToken',
+      env.ACCESS_TOKEN_SECRET_KEY,
       { expiresIn: '1h' }
     )
 
@@ -106,7 +107,7 @@ const login = async (
         uid: existingUser.id,
         email: existingUser.email
       },
-      'refreshToken',
+      env.REFRESH_TOKEN_SECRET_KEY,
       { expiresIn: '365d' }
     )
 
