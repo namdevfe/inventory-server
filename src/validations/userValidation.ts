@@ -1,4 +1,5 @@
 import { CreateUserPayload } from '@/types/userType'
+import ApiError from '@/utils/ApiError'
 import { NextFunction, Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import Joi from 'joi'
@@ -26,9 +27,7 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
     await schema.validateAsync(req.body, { abortEarly: false })
     next()
   } catch (error: any) {
-    res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
-      errors: error?.details
-    })
+    next(new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, error.message))
   }
 }
 

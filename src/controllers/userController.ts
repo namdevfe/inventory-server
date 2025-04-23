@@ -7,7 +7,7 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
     const response = await userService.createUser(req.body)
     res.status(response.statusCode).json(response)
   } catch (error) {
-    res.json(StatusCodes.BAD_REQUEST).json({ message: 'Something went wrongs' })
+    next(error)
   }
 }
 
