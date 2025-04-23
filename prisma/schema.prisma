@@ -14,12 +14,41 @@ datasource db {
 }
 
 model User {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  name  String
-  email String @unique
-  phone String @unique
-  password String
-  refreshToken String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  email      String   @unique                     
+  username   String   @unique                     
+  password   String                              
+  firstName  String                              
+  lastName   String                              
+  phone      String   @unique                     
+  dob        DateTime?                            
+  gender     Gender                               
+  avatar      String?                              
+  role       Role     @default(STAFF)         
+  createdAt  DateTime @default(now())             
+  updatedAt  DateTime @updatedAt                  
+  shops      Shop[]                               
 }
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum Role {
+  ADMIN
+  STAFF
+}
+
+model Shop {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  location       String
+  adminId        String   @db.ObjectId
+  admin          User     @relation(fields: [adminId], references: [id])
+  employeeIds    String[] @db.ObjectId
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+
