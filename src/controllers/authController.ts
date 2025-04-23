@@ -10,6 +10,15 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
-const authController = { register }
+const login = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const response = await authService.login(req.body)
+    res.status(response.statusCode).json(response)
+  } catch (error) {
+    next(error)
+  }
+}
+
+const authController = { register, login }
 
 export default authController

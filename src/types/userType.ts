@@ -4,10 +4,23 @@ export interface User {
   email: string
   phone: string
   password?: string
+  refreshToken?: string
   createdAt: Date
   updatedAt: Date
 }
 
-export type RegisterPayload = Omit<User, 'id' | 'createdAt' | 'updatedAt'>
+/** Auth */
+export type RegisterPayload = Omit<
+  User,
+  'id' | 'createdAt' | 'updatedAt' | 'refreshToken'
+>
+export type LoginPayload = Pick<User, 'email' | 'password'>
+export type LoginResponse = Pick<User, 'refreshToken'> & {
+  accessToken: string
+}
 
-export type CreateUserPayload = Omit<User, 'id' | 'createdAt' | 'updatedAt'>
+/** Users */
+export type CreateUserPayload = Omit<
+  User,
+  'id' | 'createdAt' | 'updatedAt' | 'refreshToken'
+>

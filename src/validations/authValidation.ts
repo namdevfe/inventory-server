@@ -1,4 +1,4 @@
-import { RegisterPayload } from '@/types/userType'
+import { LoginPayload, RegisterPayload } from '@/types/userType'
 import ApiError from '@/utils/ApiError'
 import { NextFunction, Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
@@ -20,7 +20,7 @@ const register = async (req: Request, _: Response, next: NextFunction) => {
       .required()
       .pattern(new RegExp(regexPhoneNumber))
       .message(VALIDATE_PHONE_MESSAGE),
-    password: Joi.string().min(6)
+    password: Joi.string().required().min(6)
   })
 
   try {
@@ -31,6 +31,25 @@ const register = async (req: Request, _: Response, next: NextFunction) => {
   }
 }
 
-const authValidation = { register }
+const login = async (req: Request, _: Response, next: NextFunction) => {
+  const schema = Joi.object<LoginPayload>({
+    email: Joi.string()
+      .required()
+      .email({
+        minDomainSegments: 2,
+        tlds: { allow: ['com'] }
+      }),
+    password: Joi.string().required().min(6)
+  })
+
+  try {
+    await schema.validateAsync(req.body || {}, { abortEarly: false })
+    next()
+  } catch (error: any) {
+    next(new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, error?.message))
+  }
+}
+
+const authValidation = { register, login }
 
 export default authValidation
