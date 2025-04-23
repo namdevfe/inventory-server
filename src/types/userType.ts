@@ -3,9 +3,11 @@ export interface User {
   name: string
   email: string
   phone: string
-  password: string
+  password?: string
   createdAt: Date
   updatedAt: Date
 }
+
+export type RegisterPayload = Omit<User, 'id' | 'createdAt' | 'updatedAt'>
 
 export type CreateUserPayload = Omit<User, 'id' | 'createdAt' | 'updatedAt'>
