@@ -133,6 +133,32 @@ const login = async (
   }
 }
 
-const authService = { register, login }
+const getProfile = async (userId: string): Promise<ApiResponse<User>> => {
+  try {
+    const existingUser = await db.user.findUnique({
+      where: {
+        id: userId
+      },
+      omit: {
+        password: true,
+        refreshToken: true
+      }
+    })
+
+    if (!existingUser) {
+      throw new ApiError(StatusCodes.NOT_FOUND, 'User not found')
+    }
+
+    return {
+      statusCode: StatusCodes.OK,
+      message: 'Get profile is successfully',
+      data: existingUser
+    }
+  } catch (error) {
+    throw error
+  }
+}
+
+const authService = { register, login, getProfile }
 
 export default authService

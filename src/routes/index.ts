@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express'
 import { userRoutes } from '@/routes/userRoute'
 import { authRoutes } from '@/routes/authRoute'
 import { StatusCodes } from 'http-status-codes'
+import verifyTokenMiddleware from '@/middlewares/verifyTokenMiddleware'
 
 const Router = express.Router()
 
