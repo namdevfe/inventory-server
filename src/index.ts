@@ -1,6 +1,6 @@
 import { env } from '@/config/environment'
 import errorHandlerMiddleware from '@/middlewares/errorHandlerMiddleware'
-import { APIs_V1 } from '@/routes'
+import { APIs_V1 } from '@/routes/v1'
 import express from 'express'
 
 const app = express()

@@ -1,6 +1,5 @@
 import userService from '@/services/userService'
 import { NextFunction, Request, Response } from 'express'
-import { StatusCodes } from 'http-status-codes'
 
 const createUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -11,8 +10,6 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
-const userController = {
-  createUser
-}
+const userController = { createUser }
 
 export default userController

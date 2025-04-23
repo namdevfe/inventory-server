@@ -16,7 +16,7 @@ datasource db {
 model User {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
   email      String   @unique                     
-  username   String   @unique                     
+  username   String   @unique               
   password   String                              
   firstName  String                              
   lastName   String                              
@@ -46,7 +46,7 @@ model Shop {
   location       String
   adminId        String   @db.ObjectId
   admin          User     @relation(fields: [adminId], references: [id])
-  employeeIds    String[] @db.ObjectId
+  staffIds    String[] @db.ObjectId
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }

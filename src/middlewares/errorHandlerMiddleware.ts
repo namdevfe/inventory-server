@@ -4,6 +4,7 @@ import { StatusCodes } from 'http-status-codes'
 interface ResponseError {
   statusCode: number
   message: string
+  errors?: { field: string; message: string }[]
   stack?: any
 }
 
@@ -13,9 +14,12 @@ const errorHandlerMiddleware = (
   res: Response,
   _next: NextFunction
 ) => {
+  if (!error.statusCode) error.statusCode = StatusCodes.INTERNAL_SERVER_ERROR
+
   const responseError: ResponseError = {
-    statusCode: error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
-    message: error.message || StatusCodes[StatusCodes.INTERNAL_SERVER_ERROR],
+    statusCode: error.statusCode,
+    message: error.message || StatusCodes[error.statusCode],
+    errors: error.errors || null,
     stack: error.stack
   }
 
