@@ -5,6 +5,8 @@ const HOST_NAME = 'localhost'
 const HOST_PORT = 5000
 const app = express()
 
+app.use(express.json())
+
 app.use('/api/v1', APIs_V1)
 
 app.listen(HOST_PORT, HOST_NAME, () => {
